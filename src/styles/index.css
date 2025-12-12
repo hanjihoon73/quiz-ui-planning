@@ -1,0 +1,85 @@
+:root {
+  /* Colors */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f3f4f6;
+  /* Gray 100 */
+  --color-text-primary: #111827;
+  /* Gray 900 */
+  --color-text-secondary: #4b5563;
+  /* Gray 600 */
+  --color-text-tertiary: #9ca3af;
+  /* Gray 400 */
+
+  --color-brand: #6366f1;
+  /* Indigo 500 */
+  --color-brand-light: #818cf8;
+  --color-brand-dark: #4f46e5;
+
+  --color-success: #01B09F;
+  /* Teal */
+  --color-error: #E33B9D;
+  /* Pink */
+  --color-info: #3b82f6;
+  /* Blue 500 */
+
+  /* Status Colors */
+  --status-correct: var(--color-success);
+  --status-wrong: var(--color-error);
+  --status-current: var(--color-brand);
+  --status-scheduled: #e5e7eb;
+  /* Gray 200 */
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+
+  /* Border */
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+
+  /* Typography */
+  --font-sans: 'Pretendard', 'Outfit', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
