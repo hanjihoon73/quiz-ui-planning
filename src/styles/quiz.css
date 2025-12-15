@@ -114,66 +114,9 @@
     color: var(--color-error);
 }
 
-/* Inline Elements */
-.inline-input {
-    border: none;
-    border-bottom: 2px solid var(--color-brand);
-    text-align: center;
-    font-size: 1.1em;
-    font-weight: 600;
-    color: var(--color-brand-dark);
-    background: transparent;
-    width: 120px;
-    padding: 0 4px;
-    outline: none;
-    transition: all 0.2s;
-}
-
-.inline-input:focus {
-    border-color: var(--color-brand);
-    background-color: var(--color-bg-secondary);
-    border-radius: 4px;
-}
-
-.inline-input.correct {
-    border-bottom-color: var(--color-success);
-    color: var(--color-success);
-    background-color: #ecfdf5;
-}
-
-.inline-input.wrong {
-    border-bottom-color: var(--color-error);
-    color: var(--color-error);
-    background-color: #fef2f2;
-}
-
-.inline-select {
-    border: 2px solid var(--color-bg-secondary);
-    border-radius: var(--radius-sm);
-    padding: 2px 8px;
-    font-size: 1em;
-    font-family: inherit;
-    cursor: pointer;
-    background-color: white;
-}
-
-.inline-select:focus {
-    border-color: var(--color-brand);
-    outline: none;
-}
-
-.inline-select.correct {
-    border-color: var(--color-success);
-    background-color: #ecfdf5;
-    color: var(--color-success);
-}
-
-.inline-select.wrong {
-    border-color: var(--color-error);
-    background-color: #fef2f2;
-    color: var(--color-error);
-}
-
+/* Inline Elements - 통일된 빈칸 스타일 */
+.inline-input,
+.inline-select,
 .inline-box {
     display: inline-flex;
     align-items: center;
@@ -182,34 +125,91 @@
     height: 36px;
     vertical-align: middle;
     background-color: white;
-    border: 2px dashed var(--color-text-tertiary);
+    border: 1px solid #d1d5db;
+    /* Gray 300 */
     border-radius: var(--radius-sm);
     margin: 0 4px;
-    padding: 0 8px;
-    color: var(--color-text-primary);
+    padding: 0 12px;
+    font-size: 1em;
     font-weight: 600;
+    color: var(--color-text-primary);
+    transition: all 0.2s;
+    text-align: center;
+    outline: none;
+}
+
+/* Input specific */
+.inline-input {
+    font-family: inherit;
+    cursor: text;
+    min-width: 50px;
+    width: auto;
+    max-width: 200px;
+    padding: 0 8px;
+}
+
+.inline-input::placeholder {
+    color: var(--color-text-tertiary);
+    /* Gray 400 - 옅은 회색 */
+    font-weight: 400;
+}
+
+.inline-input:focus {
+    border-color: var(--color-brand);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* Select specific */
+.inline-select {
+    font-family: inherit;
     cursor: pointer;
 }
 
+.inline-select:focus {
+    border-color: var(--color-brand);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* Box specific */
+.inline-box {
+    cursor: pointer;
+}
+
+/* 빈 박스일 때 '빈칸' 텍스트 표시 */
+.inline-box:empty::before {
+    content: '빈칸';
+    color: var(--color-text-tertiary);
+    /* Gray 400 - 옅은 회색 */
+    font-weight: 400;
+}
+
+/* Filled state (box only) */
 .inline-box.filled {
-    border-style: solid;
     border-color: var(--color-brand);
     background-color: #eef2ff;
     color: var(--color-brand-dark);
 }
 
+.inline-box.filled::before {
+    display: none;
+}
+
+/* Correct state */
+.inline-input.correct,
+.inline-select.correct,
 .inline-box.correct {
     border-color: var(--color-success);
     background-color: #ecfdf5;
     color: var(--color-success);
-    border-style: solid;
 }
 
+/* Wrong state */
+.inline-input.wrong,
+.inline-select.wrong,
 .inline-box.wrong {
     border-color: var(--color-error);
     background-color: #fef2f2;
     color: var(--color-error);
-    border-style: solid;
 }
 
 /* O/X Buttons */

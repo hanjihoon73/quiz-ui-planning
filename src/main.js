@@ -38,6 +38,18 @@ function render() {
 
     console.log('Rendering quiz:', currentQuiz.id, 'Status:', quizStatus[currentQuiz.id]);
 
+    // 입력 중인 input의 포커스 정보 저장 (빈칸 채우기용)
+    let focusedInputInfo = null;
+    if (currentQuiz.type === 'blank' && !isChecked) {
+      const activeInput = document.activeElement;
+      if (activeInput && activeInput.classList.contains('inline-input')) {
+        focusedInputInfo = {
+          index: parseInt(activeInput.dataset.index),
+          cursorPosition: activeInput.selectionStart
+        };
+      }
+    }
+
     // Render Layout
     const mainContent = document.querySelector('.quiz-content');
     if (!mainContent) {
@@ -93,6 +105,22 @@ function render() {
 
     // Event Bindings
     bindInlineEvents(currentQuiz, state, isChecked);
+
+    // 포커스 복원 (빈칸 채우기)
+    if (focusedInputInfo && currentQuiz.type === 'blank' && !isChecked) {
+      const inputElements = document.querySelectorAll('.inline-input');
+      const targetInput = Array.from(inputElements).find(input => 
+        parseInt(input.dataset.index) === focusedInputInfo.index
+      );
+      if (targetInput) {
+        targetInput.focus();
+        // cursor position 복원
+        if (targetInput.setSelectionRange) {
+          const cursorPos = Math.min(focusedInputInfo.cursorPosition, targetInput.value.length);
+          targetInput.setSelectionRange(cursorPos, cursorPos);
+        }
+      }
+    }
 
     // Bind Explanation Toggle
     if (isChecked) {
@@ -228,7 +256,7 @@ function processPassageContent(quiz, state, isResultView) {
       ).join('');
       return `
         <select class="inline-select ${validationClass}" data-index="${idx}" ${isResultView ? 'disabled' : ''}>
-           <option value="" disabled ${!val ? 'selected' : ''}>선택</option>
+           <option value="" disabled ${!val ? 'selected' : ''}>빈칸</option>
            ${options}
         </select>
       `;
@@ -358,11 +386,24 @@ function bindInlineEvents(quiz, state, isResultView) {
 
   if (quiz.type === 'blank') {
     document.querySelectorAll('.inline-input').forEach(input => {
+      // 입력값에 따라 크기 자동 조정 함수
+      const adjustInputSize = (inputEl) => {
+        // 입력값의 길이에 따라 크기 조정 (최소 2글자, 최대 15글자)
+        const length = Math.max(2, Math.min(15, inputEl.value.length || 2));
+        inputEl.style.width = `${length * 0.8 + 1}em`;
+      };
+      
+      // 초기 크기 설정
+      adjustInputSize(input);
+      
       input.addEventListener('input', (e) => {
         const idx = parseInt(e.target.dataset.index);
         let current = Array.isArray(state.userAnswers[quiz.id]) ? [...state.userAnswers[quiz.id]] : (state.userAnswers[quiz.id] ? [state.userAnswers[quiz.id]] : []);
         current[idx] = e.target.value;
         store.setAnswer(current);
+        
+        // 입력값에 따라 크기 조정
+        adjustInputSize(e.target);
       });
     });
   } else if (quiz.type === 'select') {
